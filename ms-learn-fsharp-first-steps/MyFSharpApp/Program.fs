@@ -41,4 +41,20 @@ let main argv =
     printfn "Current year: %i" (firstNumber + secondNumber)
     printfn "The weather is good today: %b" goodWeatherToday
 
+    let age = 66
+    if age > 65 
+    then printfn "Senior citizen"
+    else printfn "Citizen"
+
+    let agePersonA = 64
+    let message = if agePersonA > 65 then "Senior citizen" else "Citizen"
+    printfn "%s" message
+
+    let agePersonB = 66
+    if agePersonB > 65 then printfn "Person B: Senior citizen" else printfn "Person B: Citizen"
+
+    let cardValue = 1
+    let cardDescription = if cardValue = 1 then "Ace" elif cardValue = 14 then "Ace" else "A card"
+    printfn "%s" cardDescription
+
     0 // return an integer exit code
