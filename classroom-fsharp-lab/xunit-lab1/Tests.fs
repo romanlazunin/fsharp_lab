@@ -21,3 +21,26 @@ let ``basic arithmetic works`` () =
 [<Fact>]
 let ``add 2 3 = 5`` () =
     Assert.Equal(5, add 2 3)
+
+[<Fact>]
+let ``use actual and expected`` () =
+    let expected = 4
+    let actual = 2 + 2
+    Assert.Equal(expected, actual)
+
+[<Theory>]
+[<InlineData(1, 2, 3)>]
+[<InlineData(2, 3, 5)>]
+[<InlineData(10, 5, 15)>]
+let ``add works for many values`` a b expected =
+    Assert.Equal(expected, add a b)
+
+[<Fact>]
+let ``divide by zero throws`` () =
+    Assert.Throws<System.Exception>(fun () -> divide 1 0 |> ignore)
+
+[<Fact>]
+let ``tryDivide handles zero`` () =
+    match tryDivide 10 0 with
+    | None -> Assert.True(true)
+    | Some _ -> Assert.True(false)
