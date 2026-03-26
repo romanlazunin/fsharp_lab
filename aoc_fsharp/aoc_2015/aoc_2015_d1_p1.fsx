@@ -14,5 +14,12 @@ let session = Environment.GetEnvironmentVariable("AOC_SESSION")
 let input = readAoCInput "https://adventofcode.com/2015/day/1/input" session
             |> Async.RunSynchronously
 
-printfn "%s" input
+// printfn "%s" input
 
+let mutable sum = 0
+for character in input do
+    printfn "%c" character
+    if character = '(' then sum <- sum + 1 
+    else sum <- sum - 1
+
+printfn "%d" sum
