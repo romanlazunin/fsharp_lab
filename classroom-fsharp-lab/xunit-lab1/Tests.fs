@@ -2,6 +2,7 @@
 
 open System
 open Xunit
+open FsUnit.Xunit
 open Math
 
 [<Fact>]
@@ -44,3 +45,8 @@ let ``tryDivide handles zero`` () =
     match tryDivide 10 0 with
     | None -> Assert.True(true)
     | Some _ -> Assert.True(false)
+
+[<Fact>]
+let ``nice style`` () =
+    let result = 2 + 2
+    result |> should equal 4
