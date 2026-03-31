@@ -49,11 +49,35 @@ module GettingStarted =
         printfn $"\nEnergy level is at {energyLevel} but I need it to go to {turnItToEleven}"
         printfn $"Are you ready {name}? {start}"
 
+module PipelineEtc =
+    let words = ["Hello"; "World"; "FSharp"]
+    let getRandom(pool:list<string>) = 
+        let random = Random()
+        pool 
+        |> List.map (fun x -> x.ToLower())
+        |> List.item(random.Next(pool.Length))
+        |> fun x -> x.ToUpper()
+
+    let encrypt word = 
+        let encryptedWord = word |> String.map (fun x -> '*')
+        printfn $"Encrypted word {word} as {encryptedWord}"
+
 module Run =
     open GettingStarted
-    let name = getUsername()
-    printWelcome()
-    debug name
+    open PipelineEtc
+
+    // Pipelines
+    // let word = getRandom words
+    // printfn $"{word}"
+
+    words
+    |> getRandom
+    |> encrypt
+
+    // Getting started
+    // let name = getUsername()
+    // printWelcome()
+    // debug name
 
     Console.ReadKey() |> ignore
 
