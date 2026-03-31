@@ -50,6 +50,7 @@ module GettingStarted =
         printfn $"Are you ready {name}? {start}"
 
 module PipelineEtc =
+    // Pipelines & composition
     let words = ["Hello"; "World"; "FSharp"]
     let getRandom(pool:list<string>) = 
         let random = Random()
@@ -62,6 +63,40 @@ module PipelineEtc =
         let encryptedWord = word |> String.map (fun x -> '*')
         printfn $"Encrypted word {word} as {encryptedWord}"
 
+    let processWords = getRandom >> encrypt
+
+    // Control flow
+    let votingAge = 18
+    printfn "How old are you?"
+    let input = Console.ReadLine()
+    let age = int input
+
+    // if age >= votingAge then
+    //     printfn "You're all set to vote!"
+
+    let validateVoter age min = 
+        if age = min then "just old enough"
+        elif age > min then "more than old enough"
+        else "too young"
+
+    let countLetters word = 
+        let mutable count = 0
+        for i in word do
+            count <- count + 1
+        count
+
+    let termLimits() = 
+        for i = 1 to 4 do
+            printfn $"The president is in year {i}..."
+
+    let vacationCountdown() =
+        let mutable inOffice = true
+        while inOffice do 
+            for i = 4 downto 1 do
+                printfn $"The president has {i} years to go!"
+            printfn $"The president is on permanent vacation!"
+            inOffice <- false
+
 module Run =
     open GettingStarted
     open PipelineEtc
@@ -70,9 +105,22 @@ module Run =
     // let word = getRandom words
     // printfn $"{word}"
 
-    words
-    |> getRandom
-    |> encrypt
+    // words
+    // |> getRandom
+    // |> encrypt
+
+    // words |> processWords
+
+    // Control flow
+    let result = validateVoter age votingAge
+    printfn $"You're {result} to vote."
+
+    let characterCount = countLetters result
+    printfn $"The string has {characterCount} characters."
+
+    termLimits()
+    vacationCountdown()
+
 
     // Getting started
     // let name = getUsername()
