@@ -49,6 +49,8 @@ module GettingStarted =
         printfn $"\nEnergy level is at {energyLevel} but I need it to go to {turnItToEleven}"
         printfn $"Are you ready {name}? {start}"
 
+module Run =
+    open GettingStarted
     let name = getUsername()
     printWelcome()
     debug name
