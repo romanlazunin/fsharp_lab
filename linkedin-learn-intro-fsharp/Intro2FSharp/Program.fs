@@ -63,13 +63,29 @@ module PipelineEtc =
         let encryptedWord = word |> String.map (fun x -> '*')
         printfn $"Encrypted word {word} as {encryptedWord}"
 
-    let processWords = getRandom >> encrypt
+    let countVowels (word:string) =
+        let mutable count = 0
+        for character in word do
+            match character with
+            |'A'|'E'|'I'|'O'|'U' -> count <- count + 1
+            | _ -> ()
+        printfn $"Vowel count: {count}"
+        word
+
+    let processWords = getRandom >> countVowels >> encrypt
 
     // Control flow
     let votingAge = 18
-    printfn "How old are you?"
-    let input = Console.ReadLine()
-    let age = int input
+    let getInput() = 
+        printfn "How old are you?"
+        let input = Console.ReadLine()
+        try
+            let age = int input
+            Some age
+        with 
+        | ex ->
+            printfn $"{ex.Message}"
+            None
 
     // if age >= votingAge then
     //     printfn "You're all set to vote!"
@@ -79,11 +95,19 @@ module PipelineEtc =
         elif age > min then "more than old enough"
         else "too young"
 
-    let countLetters word = 
-        let mutable count = 0
-        for i in word do
-            count <- count + 1
-        count
+    let countLetters (word:string) = 
+        if word.Length = 0 then
+            None
+        else
+            let mutable count = 0
+            for i in word do
+                count <- count + 1
+            Some count
+
+    let checkOption result = 
+        match result with
+        | Some value -> value
+        | None -> 0
 
     let termLimits() = 
         for i = 1 to 4 do
@@ -112,14 +136,24 @@ module Run =
     // words |> processWords
 
     // Control flow
-    let result = validateVoter age votingAge
-    printfn $"You're {result} to vote."
+    // let result = validateVoter age votingAge
+    // printfn $"You're {result} to vote."
 
-    let characterCount = countLetters result
-    printfn $"The string has {characterCount} characters."
+    // let characterCount = countLetters result
+    // printfn $"The string has {characterCount} characters."
+    
+    getInput()
+    |> checkOption
+    |> fun age -> validateVoter age votingAge
+    |> fun result -> printfn $"You're {result} to vote."
 
-    termLimits()
-    vacationCountdown()
+    // countLetters "Hello World"
+    countLetters ""
+    |> checkOption
+    |> fun result -> printfn $"The string has {result} characters."
+
+    // termLimits()
+    // vacationCountdown()
 
 
     // Getting started
