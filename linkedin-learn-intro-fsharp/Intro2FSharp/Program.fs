@@ -177,8 +177,16 @@ module OOP =
     type IInteractable =
         abstract member Comment : string -> unit
     
+    type Base (name: string) =
+        // Virtual methods
+        abstract member Debug : unit -> unit
+        default this.Debug() = printfn $"Base class used with {name}"
+
     // Classes
     type Course(name: string, rating: int) =
+        // Inheritance
+        inherit Base(name)
+
         // Let bindings
         let school = "Galactic University"
 
@@ -196,7 +204,7 @@ module OOP =
             member this.Comment message = printfn $"Comments: {message}"
 
         member this.Comment message = (this :> IInteractable).Comment message
-        member this.Debug() = printfn $"Course: {this.Name} is rated {this.Rating} - offered by {school}"
+        override this.Debug() = printfn $"Course: {this.Name} is rated {this.Rating} - offered by {school}"
         member this.UpdateRating x = this.Rating <- this.Rating + x
 
         static member Help() = printfn "How we can assist you?"
@@ -214,6 +222,11 @@ module Run =
     Course.Help()
 
     fsharp.Comment "Great course!"
+
+    let modifiedCourse = { new Course() with 
+        override this.ToString (): string = $"Course: {this.Name}"
+    }
+    printfn $"{modifiedCourse.ToString()}"
 
     // Discriminated Unions
     // Sabattical "Valencia, Spain"
