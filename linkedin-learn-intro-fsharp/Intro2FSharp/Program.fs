@@ -172,6 +172,10 @@ module DataGroups =
 
 
 module OOP =
+
+    // Interfaces
+    type IInteractable =
+        abstract member Comment : string -> unit
     
     // Classes
     type Course(name: string, rating: int) =
@@ -188,6 +192,10 @@ module OOP =
         member this.Name = name
         member val Rating = rating with get, set
 
+        interface IInteractable with
+            member this.Comment message = printfn $"Comments: {message}"
+
+        member this.Comment message = (this :> IInteractable).Comment message
         member this.Debug() = printfn $"Course: {this.Name} is rated {this.Rating} - offered by {school}"
         member this.UpdateRating x = this.Rating <- this.Rating + x
 
@@ -203,8 +211,9 @@ module Run =
     fsharp.Rating <- 2
     fsharp.UpdateRating 3
     fsharp.Debug()
-
     Course.Help()
+
+    fsharp.Comment "Great course!"
 
     // Discriminated Unions
     // Sabattical "Valencia, Spain"
