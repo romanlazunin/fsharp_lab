@@ -153,18 +153,44 @@ module DataGroups =
         member this.Debug() = printfn $"\n{this.FirstName} {this.LastName} is {this.Age}"
         member _.GetGreeting() = printfn $"Happy coding!"
 
+    type Status =
+        | Active of author: Author
+        | Sabattical of string
+        | Retired of int
+
+    let getStatus (status: Status) =
+        match status with
+        | Active (author = auth) -> printf $"Status: Active - {auth.GetGreeting()}"
+        | Sabattical location -> printfn $"Status: On Sabattical in {location}"
+        | Retired year-> printfn $"Status: Retired since {year}"
+
+    type Client = Client of id: int
+
+    let unwrapClient (Client id) =
+        // let (Client id) = client
+        printfn $"Client ID: {id}"
+
+
 module Run =
     open GettingStarted
     open PipelineEtc
     open DataGroups
 
-    let myProfile = { FirstName = "Harrison"; LastName = "Ferrone"; Age = 33}
-    let updatedProfile = { myProfile with Age = 34}
-    // printfn $"\n{myProfile.FirstName} {myProfile.LastName} is {myProfile.Age}"
-    // printfn $"\n{updatedProfile.FirstName} {updatedProfile.LastName} is {updatedProfile.Age}"
-    myProfile.Debug()
-    updatedProfile.Debug()
-    updatedProfile.GetGreeting()
+    Sabattical "Valencia, Spain"
+    |> getStatus
+
+    Client 007
+    |> unwrapClient
+
+
+    // Records
+    // let myProfile = { FirstName = "Harrison"; LastName = "Ferrone"; Age = 33}
+    // let updatedProfile = { myProfile with Age = 34}
+    // // printfn $"\n{myProfile.FirstName} {myProfile.LastName} is {myProfile.Age}"
+    // // printfn $"\n{updatedProfile.FirstName} {updatedProfile.LastName} is {updatedProfile.Age}"
+    // myProfile.Debug()
+    // updatedProfile.Debug()
+    // updatedProfile.GetGreeting()
 
     // Tuples
     // decompose origin
