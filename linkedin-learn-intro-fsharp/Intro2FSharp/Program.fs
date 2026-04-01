@@ -121,9 +121,55 @@ module PipelineEtc =
             printfn $"The president is on permanent vacation!"
             inOffice <- false
 
+module DataGroups =
+    // Tuples
+    let origin = (0, 0)
+    let fullname = ("Harrison", "Ferrone")
+
+    // Multi-value tuples
+    let userData = ("Harrison", 33, true)
+
+    // Decomposing tuples
+    let decompose tuple =
+        // let x = fst tuple
+        // let y = snd tuple
+        let x, y = tuple
+        printfn $"x: {x}, y: {y}"
+
+    let decomposeBigTuple tuple =
+        // let fst, snd, thr = tuple
+        let fst, snd, _ = tuple
+        // printfn $"1st: {fst}, 2nd: {snd}, 3rd: {thr}" 
+        printfn $"1st: {fst}, 2nd: {snd}" 
+
+    // Records
+    type Author =
+        {
+            FirstName: string
+            LastName: string
+            Age: int
+        }
+        // Record members
+        member this.Debug() = printfn $"\n{this.FirstName} {this.LastName} is {this.Age}"
+        member _.GetGreeting() = printfn $"Happy coding!"
+
 module Run =
     open GettingStarted
     open PipelineEtc
+    open DataGroups
+
+    let myProfile = { FirstName = "Harrison"; LastName = "Ferrone"; Age = 33}
+    let updatedProfile = { myProfile with Age = 34}
+    // printfn $"\n{myProfile.FirstName} {myProfile.LastName} is {myProfile.Age}"
+    // printfn $"\n{updatedProfile.FirstName} {updatedProfile.LastName} is {updatedProfile.Age}"
+    myProfile.Debug()
+    updatedProfile.Debug()
+    updatedProfile.GetGreeting()
+
+    // Tuples
+    // decompose origin
+    // decomposeBigTuple userData
+
 
     // Pipelines
     // let word = getRandom words
@@ -142,15 +188,15 @@ module Run =
     // let characterCount = countLetters result
     // printfn $"The string has {characterCount} characters."
     
-    getInput()
-    |> checkOption
-    |> fun age -> validateVoter age votingAge
-    |> fun result -> printfn $"You're {result} to vote."
+    // getInput()
+    // |> checkOption
+    // |> fun age -> validateVoter age votingAge
+    // |> fun result -> printfn $"You're {result} to vote."
 
-    // countLetters "Hello World"
-    countLetters ""
-    |> checkOption
-    |> fun result -> printfn $"The string has {result} characters."
+    // // countLetters "Hello World"
+    // countLetters ""
+    // |> checkOption
+    // |> fun result -> printfn $"The string has {result} characters."
 
     // termLimits()
     // vacationCountdown()
