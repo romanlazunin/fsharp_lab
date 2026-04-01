@@ -171,16 +171,47 @@ module DataGroups =
         printfn $"Client ID: {id}"
 
 
+module OOP =
+    
+    // Classes
+    type Course(name: string, rating: int) =
+        // Let bindings
+        let school = "Galactic University"
+
+        // Do bindings
+        do printfn "Course created!"
+
+        // Constructors
+        new() = Course("TBA", 0)
+
+        // Members
+        member this.Name = name
+        member val Rating = rating with get, set
+
+        member this.Debug() = printfn $"Course: {this.Name} is rated {this.Rating} - offered by {school}"
+        member this.UpdateRating x = this.Rating <- this.Rating + x
+
+        static member Help() = printfn "How we can assist you?"
+
 module Run =
     open GettingStarted
     open PipelineEtc
     open DataGroups
+    open OOP
 
-    Sabattical "Valencia, Spain"
-    |> getStatus
+    let fsharp = new Course("Intro2FSharp", 1)
+    fsharp.Rating <- 2
+    fsharp.UpdateRating 3
+    fsharp.Debug()
 
-    Client 007
-    |> unwrapClient
+    Course.Help()
+
+    // Discriminated Unions
+    // Sabattical "Valencia, Spain"
+    // |> getStatus
+
+    // Client 007
+    // |> unwrapClient
 
 
     // Records
