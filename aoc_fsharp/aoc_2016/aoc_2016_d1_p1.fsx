@@ -2,4 +2,4 @@ let input = "L2, L5, L5, R5, L2, L4, R1, R1, L4, R2, R1, L1, L4, R1, L4, L4, R5,
 
 let inputSplit = input.Split(", ")
 
-printfn "%A" inputSplit
+printfn $"{inputSplit}"
