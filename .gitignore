@@ -29,3 +29,4 @@ paket-files/
 
 # Ionide (F# VS Code plugin)
 ionide/
+/visual-studio/FSharpLab1/.vs
