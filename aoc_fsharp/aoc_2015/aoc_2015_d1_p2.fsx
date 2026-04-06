@@ -18,10 +18,15 @@ let intArray =
     input.ToCharArray()
     |> Array.map (fun x -> if x = '(' then 1 else -1 )
 
-let rec sumRec (a: int array) = 
-    if a.Length > 0 then
-        let temp = a[a.Length - 1] + sumRec(a[0..a.Length - 2])
-        temp
-    else 0
+let rec sumRec (arr: int array) = 
+    match arr with
+    | [||] -> 0
+    | x -> x[x.Length - 1] + sumRec(x[0..x.Length - 2])
+
+
+    // if a.Length > 0 then
+    //     let temp = a[a.Length - 1] + sumRec(a[0..a.Length - 2])
+    //     temp
+    // else 0
 
 printfn $"{sumRec intArray}"
